@@ -1,11 +1,11 @@
 
 import Link from "next/link";
-
+import { createUser } from "@/components/controller";
 
 export default function SignUpPage() {
 
     return (
-        <form className="flex flex-col">
+        <form action={createUser} className="flex flex-col">
             <h2 className="py-10 text-2xl text-slate-700 font-medium text-center">Sign Up</h2>
             <div className="flex flex-col">
                 <label htmlFor="username">Username</label>
