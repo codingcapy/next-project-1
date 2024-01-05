@@ -9,7 +9,7 @@ import User from "./models/User"
 export const authConfig = {
     adapter: MongoDBAdapter(clientPromise),
     session: {
-        strategy: "database"
+        strategy: "jwt"
     },
     providers: [GitHub, CredentialsProvider(
         {
@@ -29,13 +29,27 @@ export const authConfig = {
         }
     )],
     callbacks: {
-        async session({ session, user }) {
-            console.log("other user is")
+        async jwt({ token, user }) {
+            console.log("HEYYYYY")
+            console.log(token);
+            console.log("COOOOL")
+            console.log(user)
+            if (user) {
+                token.id = user.id
+                //@ts-ignore
+                token.username = user.username;
+            }
+            return token
+        },
+        async session({ session, token }) {
+            console.log("LOOK HERE!!")
             console.log(session)
-            // session.user.id = user.id
-            // //@ts-ignore
-            // session.user.username = user.username
-            // return session
+            console.log("LOOK ALSOOO HERE!!")
+            console.log(token);
+            //@ts-ignore
+            session.user.id = token.id
+            //@ts-ignore
+            session.user.username = token.username
             return session
         },
     }
