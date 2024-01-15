@@ -2,7 +2,6 @@
 
 "use server"
 
-import db from "@/db/connect";
 import { redirect } from "next/navigation"
 import bcrypt from "bcrypt"
 import User from "@/models/User";

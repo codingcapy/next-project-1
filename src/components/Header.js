@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Header() {
     return (
-        <header className="py-5 flex justify-between z-10 sticky top-0">
+        <header className="py-5 flex justify-between z-10 sticky top-0 bg-slate-800 text-white">
             <div>
                 <Link href={"/"} className="px-5">CapyNext</Link>
                 <Link href={"/"} className="px-5">Home</Link>
