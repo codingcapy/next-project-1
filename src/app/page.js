@@ -11,7 +11,7 @@ export default async function Home() {
   console.log(session)
   return (
     <div>
-      <h1>{session?.user.username}</h1>
+      <h1>{session?.user?.username}</h1>
     </div>
   )
 }

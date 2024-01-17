@@ -5,6 +5,8 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "./lib/mongoclient"
 import User from "./models/User"
+import bcrypt from "bcryptjs"
+import db from "@/db/connect"
 
 export const authConfig = {
     adapter: MongoDBAdapter(clientPromise),
@@ -18,10 +20,13 @@ export const authConfig = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials) {
+                await db
                 const user = await User.findOne({ username: credentials.username })
                 if (!user) {
                     return null
                 }
+                const passwordsMatch = await bcrypt.compare(credentials.password, user.password)
+                if (!passwordsMatch) return null
                 console.log("user is")
                 // console.log(user)
                 return user
@@ -52,7 +57,8 @@ export const authConfig = {
             session.user.username = token.username
             return session
         },
-    }
+    },
+    secret:"secret"
 } satisfies NextAuthConfig
 
 export const {
